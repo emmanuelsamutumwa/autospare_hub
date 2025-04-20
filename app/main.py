@@ -1,18 +1,16 @@
 from fastapi import FastAPI
 
-from routers import user
+from app.routers import user
+from app.routers import role
 from .database import engine, Base
 
-# Import your models so they are registered
-# from app import models
 
 app = FastAPI()
 
-# Create DB tables
 Base.metadata.create_all(bind=engine)
 
-# Include the user router
 app.include_router(user.router)
+app.include_router(role.router)
 
 @app.get("/")
 def read_root():
